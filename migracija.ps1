@@ -125,7 +125,7 @@ $Acl.SetAccessRule($Ar)
 $Acl | Set-Acl -Path $home 
  
 ###################### Backup current user's SID to file in home directory(comment below 2 lines if not needed)################# 
-Write-Host "$CurrentUser`'s SID $CurrentUserSID is saved to file in $home\UserSID.txt." 
+Write-Host "$CurrentUser`'s SID $CurrentUserSID buvo issaugotas $home\UserSID.txt." 
 Set-Content $home\UserSID.txt "SID of $CurrentUser `r`n$CurrentUserSID`r`n`r`nSID of $newSPN_Name SID `r`n$NewUserSID" 
  
 ####################### If AD Join is OK, then change registry of current user SID to new user SID ############## 
@@ -141,10 +141,10 @@ $Acl = Get-Acl "Registry::HKU\$($CurrentUserSID)_Classes"
 $rule = New-Object System.Security.AccessControl.RegistryAccessRule ($newSPN_Name,"FullControl","ContainerInherit,ObjectInherit","None","Allow") 
 $Acl.SetAccessRule($rule) 
 $Acl |Set-Acl -Path "Registry::HKU\$($CurrentUserSID)_Classes" 
-Write-Host -Fore Green "Current $CurrentUser`'s profile has been migrated successfully to new $newSPN_Name." 
+Write-Host -Fore Green "Dabartinio vartotojo $CurrentUser`'s buvo migruotas i nauja profili $newSPN_Name." 
 } 
 ####################### Prompt the user to restart the computer ############################ 
-$Restart=Read-Host "`nDo you want to restart the computer now and login as new domain user($newSPN_Name)? If you choose 'y', please close your programs and save your work?(y/n)" 
+$Restart=Read-Host "`nAr norite perkrauti kompiuteri ir prisijungti i naujaji vartotoja ($newSPN_Name)? (y/n)" 
 If ($Restart -eq 'y') 
 { Restart-Computer -Force } 
 } 
